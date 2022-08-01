@@ -8,4 +8,7 @@ read ssh
 echo $ssh > /home/$user/.ssh/authorized_keys
 touch /etc/sudoers.d/$user
 echo ''$user 'ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers.d/$user
+apt install python2 -y
+sed -i "84 i alias python='python2'" .bashrc
+source .bashrc
 
