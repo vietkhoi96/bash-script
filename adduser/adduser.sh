@@ -1,14 +1,14 @@
-echo -n "Nhap ten user: "
-read user
-adduser "$user"
-cp -r .ssh /home/$user/
-chown -R $user:$user /home/$user/.ssh/
-echo -n "Nhap sshkey: "
-read ssh
-echo $ssh > /home/$user/.ssh/authorized_keys
-touch /etc/sudoers.d/$user
-echo ''$user 'ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers.d/$user
-apt install python2 -y
-sed -i "84 i alias python='python2'" .bashrc
-source .bashrc
+#!/bin/bash
+useradd -s /bin/bash -d /home/$1/ -m -G sudo $1
 
+mkdir /home/$1/.ssh/
+chmod 0700 /home/$1/.ssh/
+
+touch /home/$1/.ssh/authorized_keys
+chmod 600 /home/$1/.ssh/authorized_keys
+
+chown -R $1:$1 /home/$1/.ssh/
+chown -R $1:root /home/$1/.ssh/*
+
+echo "%$1  ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/sudo-$1
+chmod 440 /etc/sudoers.d/$1
